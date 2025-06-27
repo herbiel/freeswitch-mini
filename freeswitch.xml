@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<document type="freeswitch/xml">
+  <X-PRE-PROCESS cmd="include" data="vars.xml" />
+
+  <!-- DIALPLAN -->
+  <section name="dialplan" description="Regex/XML Dialplan">
+
+<context name="default">
+  </context>
+
+<context name="public">
+</context>
+
+ </section>
+
+ <!-- CONFIGURATIONS -->
+<section name="configuration" description="Webitel FreeSWITCH Configurations">
+  <X-PRE-PROCESS cmd="include" data="configuration.xml" />
+</section>
+
+</document>
