@@ -39,7 +39,7 @@ SignalWire **Personal Access Tokens** (PAT)s are required to access FreeSWITCH i
     curl https://raw.githubusercontent.com/herbiel/freeswitch-mini/refs/heads/main/vars.xml \
         -o vars.xml
 
-Change IP in the `vars.xml`
+Change IP in the `vars.xml` , `external_sip_ip` 
 
 ## Run FreeSWITCH
 
