@@ -30,13 +30,13 @@ SignalWire **Personal Access Tokens** (PAT)s are required to access FreeSWITCH i
 ## Install config files
 
     cd /etc/freeswitch
-    curl https://git.webitel.com/projects/WEP/repos/freeswitch/raw/mime.types \
+    curl https://raw.githubusercontent.com/herbiel/freeswitch-mini/refs/heads/main/mime.types \
         -o mime.types
-    curl https://git.webitel.com/projects/WEP/repos/freeswitch/raw/configuration.xml \
+    curl https://raw.githubusercontent.com/herbiel/freeswitch-mini/refs/heads/main/configuration.xml \
         -o configuration.xml
-    curl https://git.webitel.com/projects/WEP/repos/freeswitch/raw/freeswitch.xml \
+    curl https://raw.githubusercontent.com/herbiel/freeswitch-mini/refs/heads/main/freeswitch.xml \
         -o freeswitch.xml
-    curl https://git.webitel.com/projects/WEP/repos/freeswitch/raw/vars.xml \
+    curl https://raw.githubusercontent.com/herbiel/freeswitch-mini/refs/heads/main/vars.xml \
         -o vars.xml
 
 Change IP in the `vars.xml`
