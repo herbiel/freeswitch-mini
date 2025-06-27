@@ -367,9 +367,7 @@
     <param name="tls-verify-depth" value="2"/>
     <param name="tls-verify-in-subjects" value=""/>
     <param name="tls-version" value="$${sip_tls_version}"/>
-    <!-- webitel -->
-    <!-- param name="odbc-dsn" value="pgsql://host=postgres dbname=webitel user=opensips password=webitel options='-c client_min_messages=NOTICE' application_name='freeswitch'" /-->
-    <param name="user-agent-string" value="Webitel"/>
+    <param name="user-agent-string" value="Freeswitch"/>
     <param name="username" value="Webitel"/>
   </settings>
 	</profile>
