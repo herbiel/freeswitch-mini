@@ -2,27 +2,28 @@
 
     <configuration name="modules.conf" description="Modules">
       <modules>
-    <load module="mod_console"/>
-    <load module="mod_event_socket"/>
-    <load module="mod_sofia"/>
-    <load module="mod_loopback"/>
-    <load module="mod_logfile"/>
-    <load module="mod_commands"/>
-    <load module="mod_db"/>
-    <load module="mod_dptools"/>
-    <load module="mod_expr"/>
-    <load module="mod_hash"/>
-    <load module="mod_dialplan_xml"/>
-    <load module="mod_imagick"/>
-    <load module="mod_png"/>
-    <load module="mod_av"/>
-    <load module="mod_sndfile"/>
-    <load module="mod_opusfile"/>
-    <load module="mod_native_file"/>
-    <load module="mod_local_stream"/>
-    <load module="mod_tone_stream"/>
-    <load module="mod_lua"/>
-    <load module="mod_http_cache"/>
+	    <load module="mod_console"/>
+	    <load module="mod_event_socket"/>
+	    <load module="mod_sofia"/>
+	    <load module="mod_loopback"/>
+	    <load module="mod_logfile"/>
+	    <load module="mod_commands"/>
+	    <load module="mod_db"/>
+	    <load module="mod_dptools"/>
+	    <load module="mod_expr"/>
+	    <load module="mod_hash"/>
+	    <load module="mod_dialplan_xml"/>
+	    <load module="mod_imagick"/>
+	    <load module="mod_png"/>
+	    <load module="mod_av"/>
+	    <load module="mod_sndfile"/>
+	    <load module="mod_opusfile"/>
+	    <load module="mod_native_file"/>
+	    <load module="mod_local_stream"/>
+	    <load module="mod_tone_stream"/>
+	    <load module="mod_lua"/>
+	    <load module="mod_http_cache"/>
+	    <load module="mod_cdr_csv"/>
 
       </modules>
     </configuration>
@@ -117,57 +118,6 @@
   </settings>
 </configuration>
 
-<configuration name="json_cdr.conf" description="JSON CDR">
-		<settings>
-
-			<!-- Global parameters -->
-			<param name="log-b-leg" value="true"/>
-			<param name="prefix-a-leg" value="false"/>
-
-			<!-- Whether to URL encode the individual JSON values. Defaults to true, set to false for standard JSON. -->
-			<param name="encode-values" value="true"/>
-
-			<!-- Normally if url and log-dir are present, url is attempted first and log-dir second.
-			     This options allows to do both systematically. -->
-			<param name="log-http-and-disk" value="false"/>
-
-			<!-- File logging -->
-			<!-- Directory where to create the "json_cdr" directory used to store JSON CDRs. Leave empty for no file logging. -->
-			<!-- Might be overriden by a channel variable "json_cdr_base". -->
-			<param name="log-dir" value=""/>
-			<!-- Whether to rotate file CDRs. -->
-			<param name="rotate" value="false"/>
-
-			<!-- HTTP(S) logging -->
-			<!-- URL where to POST JSON CDRs. Leave empty for no URL logging. Up to 20 URLs may be specified. -->
-            <param name="url" value="$${cdr_url}/sys/recordings"/>
-			<!-- Authentication scheme for the above URL. May be one of basic|digest|NTLM|GSS-NEGOTIATE|any-->
-<!--			<param name="auth-scheme" value="basic"/>-->
-			<!-- Credentials in the form  username:password  if auth-scheme is used. Leave empty for no authentication. -->
-<!--			<param name="cred" value="string"/>-->
-			<!-- Whether to base64 encode the entire JSON document before POSTing it. -->
-			<param name="encode" value="false"/>
-			<!-- Number of retries in case of failure. Each specified URL is tried in turn. -->
-			<param name="retries" value="10"/>
-			<!-- Delay between retries in seconds. -->
-			<param name="delay" value="50"/>
-			<!-- Disable streaming if the server doesn't support it. -->
-			<param name="disable-100-continue" value="false"/>
-			<!-- If web posting failed, the CDR is written to a file. -->
-			<!-- Error log dir ("json_cdr" is appended). Up to 20 may be specified. Default to log-dir if none is specified. -->
-			<param name="err-log-dir" value=""/>
-
-			<!-- SSL options -->
-<!--			<param name="ssl-key-path" value=""/>-->
-<!--			<param name="ssl-key-password" value=""/>-->
-			<!-- SSL version. If specified, must be either "SSLv3" or "TLSv1". -->
-<!--			<param name="ssl-version" value=""/>-->
-			<param name="enable-ssl-verifyhost" value="false"/>
-<!--			<param name="ssl-cert-path" value=""/>-->
-<!--			<param name="enable-cacert-check" value="false"/>-->
-<!--			<param name="ssl-cacert-file" value=""/>-->
-		</settings>
-	</configuration>
 
 
 <configuration name="db.conf" description="LIMIT DB Configuration">
@@ -292,6 +242,31 @@
         <param name="adjust-bitrate" value="1"/>
     </settings>
 </configuration>
+<configuration name="cdr_csv.conf" description="CDR CSV Format">
+  <settings>
+    <!-- 'cdr-csv' will always be appended to log-base -->
+    <!--<param name="log-base" value="/var/log"/>-->
+    <param name="default-template" value="example"/>
+    <!-- This is like the info app but after the call is hung up -->
+    <!--<param name="debug" value="true"/>-->
+    <param name="rotate-on-hup" value="true"/>
+    <!-- may be a b or ab -->
+    <param name="legs" value="a"/>
+	<!-- Only log in Master.csv -->
+	<!-- <param name="master-file-only" value="true"/> -->
+  </settings>
+  <templates>
+    <template name="sql">INSERT INTO cdr VALUES ("${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}", "${accountcode}");</template>
+
+    <template name="example">"${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}","${accountcode}","${read_codec}","${write_codec}","${fs_sip_name}","${verto_dvar_businessid}","${verto_dvar_department}","${sip_h_X-department}","${billmsec}","${provider}"</template>
+    <template name="softphone">"${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}","${accountcode}","${read_codec}","${write_codec}","${fs_sip_name}","${verto_dvar_businessid}"</template>
+    <template name="callgroup">"${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}","${accountcode}","${read_codec}","${write_codec}","${fs_sip_name}"</template>
+    <template name="snom">"${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}", "${accountcode}","${read_codec}","${write_codec}","${sip_user_agent}","${call_clientcode}","${sip_rtp_rxstat}","${sip_rtp_txstat}","${sofia_record_file}"</template>
+    <template name="linksys">"${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}","${accountcode}","${read_codec}","${write_codec}","${sip_user_agent}","${sip_p_rtp_stat}"</template>
+    <template name="asterisk">"${accountcode}","${caller_id_number}","${destination_number}","${context}","${caller_id}","${channel_name}","${bridge_channel}","${last_app}","${last_arg}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${amaflags}","${uuid}","${userfield}"</template>
+    <template name="opencdrrate">"${uuid}","${signal_bond}","${direction}","${ani}","${destination_number}","${answer_stamp}","${end_stamp}","${billsec}","${accountcode}","${userfield}","${network_addr}","${regex('${original_caller_id_name}'|^.)}","${sip_gateway_name}"</template>
+  </templates>
+</configuration>
 
 
 
@@ -329,8 +304,10 @@
     <param name="outbound-codec-prefs" value="PCMA"/>
     <param name="hold-music" value="$${hold_music}"/>
     <param name="rtp-timer-name" value="soft"/>
-    <param name="local-network-acl" value="passive"/>
-    <param name="apply-candidate-acl" value="0.0.0.0/0"/>
+    <!--param name="local-network-acl" value="passive"/-->
+    <param name="local-network-acl" value="localnet.auto"/>
+      <param name="apply-candidate-acl" value="localnet.auto"/>
+      <param name="apply-candidate-acl" value="wan_v4.auto"/>
     <param name="manage-presence" value="false"/>
     <param name="inbound-codec-negotiation" value="generous"/>
     <param name="disable-transcoding" value="true"/>
@@ -367,8 +344,9 @@
     <param name="tls-verify-depth" value="2"/>
     <param name="tls-verify-in-subjects" value=""/>
     <param name="tls-version" value="$${sip_tls_version}"/>
-    <param name="user-agent-string" value="Freeswitch"/>
-    <param name="username" value="Webitel"/>
+    <!-- param name="odbc-dsn" value="pgsql://host=postgres dbname=webitel user=opensips password=webitel options='-c client_min_messages=NOTICE' application_name='freeswitch'" /-->
+    <param name="user-agent-string" value="Freswitch"/>
+    <param name="username" value="freeswitch"/>
   </settings>
 	</profile>
 </profiles>
