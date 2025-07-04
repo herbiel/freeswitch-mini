@@ -277,7 +277,6 @@
     <param name="log-level" value="0"/>
     <!-- <param name="auto-restart" value="false"/> -->
     <param name="debug-presence" value="0"/>
-        <!-- webitel -->
     <!-- <param name="capture-server" value="udp:homer.domain.com:5060"/> -->
     <!-- Allow to force-expire SIP contact (using: mod_desking) -->
     <param name="reg-deny-binding-fetch-and-no-lookup" value="true"/>
@@ -344,7 +343,6 @@
     <param name="tls-verify-depth" value="2"/>
     <param name="tls-verify-in-subjects" value=""/>
     <param name="tls-version" value="$${sip_tls_version}"/>
-    <!-- param name="odbc-dsn" value="pgsql://host=postgres dbname=webitel user=opensips password=webitel options='-c client_min_messages=NOTICE' application_name='freeswitch'" /-->
     <param name="user-agent-string" value="Freswitch"/>
     <param name="username" value="freeswitch"/>
   </settings>
