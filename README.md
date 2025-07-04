@@ -22,7 +22,7 @@ SignalWire **Personal Access Tokens** (PAT)s are required to access FreeSWITCH i
 		freeswitch-mod-imagick freeswitch-mod-png freeswitch-mod-native-file \
 		freeswitch-mod-local-stream freeswitch-mod-tone-stream freeswitch-mod-lua \
 		freeswitch-mod-http-cache freeswitch-mod-spy freeswitch-music-default \
-		freeswitch-mod-json-cdr freeswitch-mod-logfile freeswitch-systemd \
+		freeswitch-mod-json-cdr freeswitch-mod-logfile freeswitch-systemd freeswitch-mod-cdr-csv \
 
 
 	mkdir /var/cache/freeswitch && chmod -R 777 /var/cache/freeswitch
