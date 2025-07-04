@@ -14,7 +14,7 @@
  </section>
 
  <!-- CONFIGURATIONS -->
-<section name="configuration" description="Webitel FreeSWITCH Configurations">
+<section name="configuration" description=" FreeSWITCH Configurations">
   <X-PRE-PROCESS cmd="include" data="configuration.xml" />
 </section>
 
